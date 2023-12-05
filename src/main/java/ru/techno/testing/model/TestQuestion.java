@@ -1,17 +1,16 @@
 package ru.techno.testing.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "test_question", schema = "test")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TestQuestion extends BaseEntity {

@@ -1,9 +1,10 @@
 package ru.techno.testing.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import ru.techno.testing.model.Author;
+import org.springframework.data.repository.NoRepositoryBean;
+import ru.techno.testing.model.BaseEntity;
 
-@RepositoryRestResource(path = "test")
-public interface BaseRepository extends JpaRepository<Author, Integer> {
+@NoRepositoryBean
+public interface BaseRepository<T extends BaseEntity> extends JpaRepository<T, Integer> {
+
 }

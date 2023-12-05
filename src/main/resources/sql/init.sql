@@ -30,8 +30,7 @@ CREATE TABLE test
     candidate_answers_id int      NOT NULL,
     last_update          timestamp,
     PRIMARY KEY (test_id),
-    FOREIGN KEY (author_id) REFERENCES author (author_id),
-    FOREIGN KEY (candidate_answers_id) REFERENCES candidate_answers (candidate_answers_id)
+    FOREIGN KEY (author_id) REFERENCES author (author_id)
 );
 
 CREATE TABLE test_question
@@ -48,7 +47,7 @@ CREATE TABLE question
 (
     question_id       int NOT NULL,
     max_point         SMALLINT,
-    description       varchar(255),
+    description       text,
     file              varchar(128),
     last_update       timestamp,
     correct_answer_id int NOT NULL,

@@ -6,8 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "author", schema = "test")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Author {
@@ -15,7 +14,7 @@ public class Author {
     @Id
     @Column(name = "author_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Byte id;
+    Short id;
 
     @Column(name = "first_name")
     String firstName;

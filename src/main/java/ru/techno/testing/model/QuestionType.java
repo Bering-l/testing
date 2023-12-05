@@ -1,9 +1,7 @@
 package ru.techno.testing.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ru.techno.testing.model.enums.Type;
 
@@ -11,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "question_type", schema = "test")
 public class QuestionType extends BaseEntity {
