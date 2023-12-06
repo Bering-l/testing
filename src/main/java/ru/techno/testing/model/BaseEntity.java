@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
 @MappedSuperclass
 @FieldDefaults(level = AccessLevel.PRIVATE)

@@ -8,7 +8,6 @@ CREATE TABLE author
     last_name     varchar(50),
     email         varchar(64),
     test_id       int                   NOT NULL,
-    description   character varying(50) NOT NULL,
     PRIMARY KEY (author_id),
     FOREIGN KEY (department_id) REFERENCES department (department_id)
 );
@@ -77,7 +76,7 @@ CREATE TABLE correct_answer
 
 CREATE TABLE candidate_answers
 (
-    candidate_answers_id SMALLINT,
+    candidate_answers_id int NOT NULL,
     question_id          int NOT NULL,
     point                SMALLINT,
     candidate_id         int NOT NULL,
@@ -91,9 +90,9 @@ CREATE TABLE candidate_answers
 CREATE TABLE candidate
 (
     candidate_id int NOT NULL,
-    email        varchar(64),
-    first_name   varchar(50),
-    last_name    varchar(50),
+    email        varchar(64) NOT NULL,
+    first_name   varchar(50) NOT NULL,
+    last_name    varchar(50) NOT NULL,
     create_date  timestamp,
     last_session timestamp,
     PRIMARY KEY (candidate_id)

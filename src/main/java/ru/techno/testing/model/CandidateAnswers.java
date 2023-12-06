@@ -17,9 +17,9 @@ public class CandidateAnswers {
 
     @Id
     @Column(name = "candidate_answers_id")
-    Byte id;
+    Integer id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id")
     Question question;
 
