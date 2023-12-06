@@ -31,9 +31,12 @@ public class Candidate extends BaseEntity {
     @UpdateTimestamp
     LocalDateTime lastSession;
 
+    @Column(nullable = false)
     String email;
 
     @ManyToMany(mappedBy = "candidateSet")
     Set<Vacancy> vacancySet = new HashSet<>();
+
+    String password;
 
 }

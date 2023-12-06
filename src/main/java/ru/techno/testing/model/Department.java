@@ -16,7 +16,7 @@ public class Department {
     @Id
     @Column(name = "department_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Byte id;
+    Short id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "department_enum", columnDefinition = "enum('ADMINISTRATION', " +

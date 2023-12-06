@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import ru.techno.testing.model.Department;
+
+
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -16,19 +18,19 @@ public class AuthorDTO {
     @NotNull
     Short id;
 
-    @NotNull
-    @Size(min=2, message = "Имя должно содержать более двух символов")
+    @Size(min = 2, message = "Поле \"Имя\" должно содержать более двух символов")
     String firstName;
 
-    @NotNull
-    @Size(min=2, message = "Фамилия должна содержать более двух символов")
+    @Size(min = 2, message = "Поле \"Фамилия\" должно содержать более двух символов")
     String lastName;
 
     @NotBlank(message = "Выберите отдел")
     Department department;
 
-    @Email
+    @Email(message = "Не корректный email")
     String email;
 
-    String description;
+    @NotBlank(message = "Укажите пароль")
+    String password;
+
 }

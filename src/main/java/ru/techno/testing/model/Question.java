@@ -3,9 +3,10 @@ package ru.techno.testing.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Data
@@ -21,11 +22,12 @@ public class Question extends BaseEntity {
 
     String file;
 
-    @Column(name = "last_update", columnDefinition = "timestamp DEFAULT CURRENT_TIMESTAMP")
-    @UpdateTimestamp
-    LocalDateTime lastUpdate;
-
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "correct_answer_id")
     CorrectAnswer correctAnswer;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "test_question", joinColumns = @JoinColumn(name = "question_id"),
+            inverseJoinColumns = @JoinColumn(name = "test_id"))
+    Set<Test> testSet = new HashSet<>();
 }

@@ -1,8 +1,10 @@
 package ru.techno.testing.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.FieldDefaults;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,9 +14,10 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "vacancy", schema = "test")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Vacancy extends BaseEntity {
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "test_id")
     Test test;
 

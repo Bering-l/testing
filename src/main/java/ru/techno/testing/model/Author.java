@@ -22,11 +22,12 @@ public class Author {
     @Column(name = "last_name")
     String lastName;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     Department department;
 
+    @Column(nullable = false)
     String email;
 
-    String description;
+    String password;
 }
