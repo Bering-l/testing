@@ -1,14 +1,14 @@
 package ru.techno.testing.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToMany;
-import jakarta.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import ru.techno.testing.model.Vacancy;
 
 import java.time.LocalDateTime;
@@ -21,9 +21,11 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CandidateDTO extends BaseDTO {
 
+    @NotBlank
     @Size(min = 2, message = "Поле \"Имя\" должно содержать более двух символов")
     String firstName;
 
+    @NotBlank
     @Size(min = 2, message = "Поле \"Фамилия\" должно содержать более двух символов")
     String lastName;
 
@@ -33,10 +35,10 @@ public class CandidateDTO extends BaseDTO {
     @NotBlank(message = "Укажите пароль")
     String password;
 
-    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     LocalDateTime createDate;
 
-    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     LocalDateTime lastSession;
 
     Set<Vacancy> vacancySet = new HashSet<>();
