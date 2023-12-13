@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import ru.techno.testing.model.Candidate;
 import ru.techno.testing.model.Test;
 
 import java.util.HashSet;
@@ -21,6 +20,6 @@ public class VacancyDTO extends BaseDTO {
     @NotBlank(message = "Поле не может быть пустым")
     String vacancyName;
 
-    Set<Candidate> candidateSet = new HashSet<>();
+    Set<CandidateDTO> candidateSet = new HashSet<>();
 
 }

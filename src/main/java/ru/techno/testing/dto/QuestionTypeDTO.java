@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import ru.techno.testing.model.Question;
 import ru.techno.testing.model.enums.Type;
 
 import java.util.ArrayList;
@@ -18,6 +17,6 @@ public class QuestionTypeDTO extends BaseDTO {
 
     Type type;
 
-    List<Question> question = new ArrayList<>();
+    List<QuestionDTO> question = new ArrayList<>();
 
 }

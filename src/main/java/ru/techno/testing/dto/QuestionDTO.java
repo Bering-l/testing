@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import ru.techno.testing.model.CorrectAnswer;
-import ru.techno.testing.model.Test;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +23,6 @@ public class QuestionDTO extends BaseDTO {
 
     CorrectAnswer correctAnswer;
 
-    Set<Test> testSet = new HashSet<>();
+    Set<TestDTO> testSet = new HashSet<>();
 
 }
