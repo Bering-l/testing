@@ -25,7 +25,7 @@ public class AuthorDTO {
     String lastName;
 
     @NotBlank(message = "Выберите отдел")
-    Department department;
+    DepartmentDTO department;
 
     @Email(message = "Не корректный email")
     String email;

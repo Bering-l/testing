@@ -21,7 +21,7 @@ public class QuestionDTO extends BaseDTO {
 
     String file;
 
-    CorrectAnswer correctAnswer;
+    CorrectAnswerDTO correctAnswer;
 
     Set<TestDTO> testSet = new HashSet<>();
 

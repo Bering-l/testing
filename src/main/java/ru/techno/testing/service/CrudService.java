@@ -4,13 +4,13 @@ import org.springframework.data.domain.Page;
 import ru.techno.testing.model.BaseEntity;
 
 public interface CrudService<E extends BaseEntity> {
-    E getById(Long id);
+    E getById(Integer id);
 
     E save(E e);
 
-    void delete(Long id);
+    void delete(Integer id);
 
-    E update(Long id, E e);
+    E update(Integer id, E e);
 
     Page<E> findAll(Integer pageNumber, String sortField, String sortDirection);
 }
