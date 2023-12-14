@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "candidate_answers", schema = "test")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CandidateAnswers {
+public class CandidateAnswers extends BaseEntity {
 
     @Id
     @Column(name = "candidate_answers_id")

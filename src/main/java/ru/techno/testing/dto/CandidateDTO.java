@@ -1,6 +1,8 @@
 package ru.techno.testing.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -35,9 +37,11 @@ public class CandidateDTO extends BaseDTO {
     @NotBlank(message = "Укажите пароль")
     String password;
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     LocalDateTime createDate;
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     LocalDateTime lastSession;
 

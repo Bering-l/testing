@@ -1,6 +1,8 @@
 package ru.techno.testing.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +20,7 @@ public class TestDTO extends BaseDTO {
 
     AuthorDTO author;
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     LocalDateTime lastUpdate;
 
