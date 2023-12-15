@@ -5,12 +5,8 @@ import ru.techno.testing.model.BaseEntity;
 
 public interface CrudService<E extends BaseEntity> {
     E getById(Integer id);
-
-    E save(E e);
-
+    void save(E e);
     void delete(Integer id);
-
     E update(Integer id, E e);
-
     Page<E> findAll(Integer pageNumber, String sortField, String sortDirection);
 }

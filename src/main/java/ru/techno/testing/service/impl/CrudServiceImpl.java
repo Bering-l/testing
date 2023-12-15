@@ -1,6 +1,5 @@
 package ru.techno.testing.service.impl;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,11 +41,10 @@ public abstract class CrudServiceImpl<E extends BaseEntity, R extends BaseReposi
 
     @Override
     @Transactional
-    public E save(E e) {
+    public void save(E e) {
         try {
             E save = this.repository.save(e);
             log.info(this.genericType.getSimpleName() + " save, id: " + e.getId());
-            return save;
         } catch (Exception ex) {
             log.error(this.genericType.getSimpleName() + " wasn't save, id: " +
                     e.getId());

@@ -2,12 +2,13 @@ CREATE SCHEMA test;
 
 CREATE TABLE author
 (
-    author_id     smallint              NOT NULL,
-    department_id smallint              NOT NULL,
+    author_id     smallint     NOT NULL,
+    department_id smallint     NOT NULL,
     first_name    varchar(50),
     last_name     varchar(50),
     email         varchar(64),
-    test_id       int                   NOT NULL,
+    test_id       int          NOT NULL,
+    password      varchar(255) NOT NULL,
     PRIMARY KEY (author_id),
     FOREIGN KEY (department_id) REFERENCES department (department_id)
 );
@@ -89,10 +90,11 @@ CREATE TABLE candidate_answers
 
 CREATE TABLE candidate
 (
-    candidate_id int NOT NULL,
-    email        varchar(64) NOT NULL,
-    first_name   varchar(50) NOT NULL,
-    last_name    varchar(50) NOT NULL,
+    candidate_id int          NOT NULL,
+    email        varchar(64)  NOT NULL,
+    first_name   varchar(50)  NOT NULL,
+    last_name    varchar(50)  NOT NULL,
+    password     varchar(255) NOT NULL,
     create_date  timestamp,
     last_session timestamp,
     PRIMARY KEY (candidate_id)
@@ -116,3 +118,41 @@ CREATE TABLE candidate_choose_vacancy
     FOREIGN KEY (candidate_id) REFERENCES candidate (candidate_id),
     FOREIGN KEY (vacancy_id) REFERENCES vacancy (vacancy_id)
 );
+
+CREATE TABLE users
+(
+    users_id int,
+    password varchar(255) not null,
+    email    varchar(64) unique,
+    primary key (users_id)
+);
+
+create table roles
+(
+    id   int,
+    name varchar(50) not null,
+    primary key (id)
+);
+
+CREATE TABLE users_roles
+(
+    user_id int NOT NULL,
+    role_id int NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) references users (users_id),
+    FOREIGN KEY (role_id) references roles (id)
+);
+
+INSERT INTO roles (name)
+VALUES ('ROLE_CANDIDATE'),
+       ('ROLE_AUTHOR');
+
+INSERT INTO users (email, password)
+VALUES ('author@gmail.com',
+        '$2a$12$PH3FZLzTgNyXESp.jDkVRuHi.WElGxygeLkJxxOhxlTMJLwIwIhde'),
+       ('author@gmail.com',
+        '$2a$12$PH3FZLzTgNyXESp.jDkVRuHi.WElGxygeLkJxxOhxlTMJLwIwIhde');
+
+INSERT INTO users_roles (user_id, role_id)
+VALUES (1, 1),
+       (2, 2);
