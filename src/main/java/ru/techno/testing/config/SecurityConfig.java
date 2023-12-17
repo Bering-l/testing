@@ -5,16 +5,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,7 +43,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(PasswordEncoder encoder) {
         List<UserDetails> userDetailsList = new ArrayList<>();
         userDetailsList.add(new User("IIVanov", encoder.encode("password"),
-                List.of(new SimpleGrantedAuthority("ROLE_USER"))));
+                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))));
         return new InMemoryUserDetailsManager(userDetailsList);
     }
 
@@ -65,14 +63,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        return http
                 .authorizeHttpRequests(
                         (authorize) -> authorize
+                                .requestMatchers("/homepage").permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                                .requestMatchers("/create_test").hasAuthority("ROLE_AUTHOR")
+                                .requestMatchers("/create_test").hasRole("AUTHOR")
+                                .requestMatchers("/test").hasRole("CANDIDATE")
+                                .requestMatchers("/test").rememberMe() // для длительной сессии
+                                .requestMatchers("/test/**").authenticated()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults());
-        return http.build();
+                .formLogin(Customizer.withDefaults())
+                .build();
     }
 }
