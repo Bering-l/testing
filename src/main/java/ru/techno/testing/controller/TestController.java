@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/create_test")
+@RequestMapping("/test")
 @RequiredArgsConstructor
-public class CreateTestController {
+public class TestController {
 
-    @GetMapping("/new_test")
+    @GetMapping("/index")
     public String showHomePage() {
-        return "view/create_test.html";
+        return "test/index";
     }
 }

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,9 +33,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
-
-    private final UsersService usersService;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -42,15 +41,17 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder encoder) {
         List<UserDetails> userDetailsList = new ArrayList<>();
-        userDetailsList.add(new User("IIVanov", encoder.encode("password"),
-                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))));
+        userDetailsList.add(new User("candidate", encoder.encode("password"),
+            List.of(new SimpleGrantedAuthority("CANDIDATE"))));
+        userDetailsList.add(new User("author", encoder.encode("password"),
+            List.of(new SimpleGrantedAuthority("AUTHOR"))));
         return new InMemoryUserDetailsManager(userDetailsList);
     }
 
     @Bean
-    protected DaoAuthenticationProvider daoAuthenticationProvider() {
+    protected DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(usersService);
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
@@ -64,17 +65,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests(
-                        (authorize) -> authorize
-                                .requestMatchers("/homepage").permitAll()
-                                .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                                .requestMatchers("/create_test").hasRole("AUTHOR")
-                                .requestMatchers("/test").hasRole("CANDIDATE")
-                                .requestMatchers("/test").rememberMe() // для длительной сессии
-                                .requestMatchers("/test/**").authenticated()
-                                .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
-                .build();
+            .authorizeHttpRequests(
+                (authorize) -> authorize
+                    .requestMatchers("/test/**").permitAll()
+                    .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                    .requestMatchers("/test/**").rememberMe() // для длительной сессии
+                    .anyRequest().authenticated())
+            .httpBasic(Customizer.withDefaults())
+            .formLogin(Customizer.withDefaults()).exceptionHandling(Customizer.withDefaults())
+            .build();
     }
 }
