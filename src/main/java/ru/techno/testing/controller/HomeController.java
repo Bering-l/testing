@@ -14,16 +14,18 @@ import java.security.Principal;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class HomeController {
-    @GetMapping("/")
+    @GetMapping("/homepage")
     public String showHomePage() {
         return "view/homepage.html";
     }
-    @GetMapping("/auth")
+
+    @GetMapping("/test")
     public String showRegistrationForm(WebRequest request, Model model) {
         UserDTO userDTO = new UserDTO();
         model.addAttribute("user", userDTO);
         return "view/register_form.html";
     }
+
     @GetMapping("/create_test")
     public String createTestForm() {
         return "view/create_test.html";
