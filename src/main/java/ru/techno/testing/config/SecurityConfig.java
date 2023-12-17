@@ -1,12 +1,12 @@
 package ru.techno.testing.config;
 
 import jakarta.servlet.DispatcherType;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -19,14 +19,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.techno.testing.service.impl.UsersService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -40,12 +35,18 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        List<UserDetails> userDetailsList = new ArrayList<>();
-        userDetailsList.add(new User("candidate", encoder.encode("password"),
-            List.of(new SimpleGrantedAuthority("CANDIDATE"))));
-        userDetailsList.add(new User("author", encoder.encode("password"),
-            List.of(new SimpleGrantedAuthority("AUTHOR"))));
-        return new InMemoryUserDetailsManager(userDetailsList);
+        UserDetails author = User.builder()
+            .username("author")
+            .password(encoder.encode("password"))
+            .roles("AUTHOR")
+            .build();
+        UserDetails candidate = User.builder()
+            .username("candidate")
+            .password(encoder.encode("password"))
+            .roles("CANDIDATE")
+            .build();
+
+        return new InMemoryUserDetailsManager(author, candidate);
     }
 
     @Bean
@@ -67,12 +68,12 @@ public class SecurityConfig {
         return http
             .authorizeHttpRequests(
                 (authorize) -> authorize
-                    .requestMatchers("/test/**").permitAll()
-                    .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                    .requestMatchers("/test/**").rememberMe() // для длительной сессии
+                    .requestMatchers("/login*", "/logout*").permitAll()
+                    .requestMatchers("/test/**").hasRole("AUTHOR")
                     .anyRequest().authenticated())
+            .csrf(Customizer.withDefaults())
             .httpBasic(Customizer.withDefaults())
-            .formLogin(Customizer.withDefaults()).exceptionHandling(Customizer.withDefaults())
+            .formLogin(Customizer.withDefaults())
             .build();
     }
 }
