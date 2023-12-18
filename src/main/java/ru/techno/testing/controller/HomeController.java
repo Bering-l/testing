@@ -14,6 +14,7 @@ import java.security.Principal;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class HomeController {
+
     @GetMapping("/homepage")
     public String showHomePage() {
         return "view/homepage.html";

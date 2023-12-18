@@ -16,11 +16,10 @@ public class Department {
     @Id
     @Column(name = "department_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Short id;
+    Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "department_enum", columnDefinition = "enum('ADMINISTRATION', " +
-            "'ACCOUNTING_DEPARTMENT', 'HR', 'IT', 'FINANCIAL_DEPARTMENT', 'SERVICE_DEPARTMENT')")
+    @Column(name = "department_enum")
     DepartmentEnum departmentEnum;
 
 }

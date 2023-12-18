@@ -1,11 +1,12 @@
 package ru.techno.testing.config;
 
 import jakarta.servlet.DispatcherType;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -21,19 +22,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.techno.testing.service.impl.UsersService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
-
-    private final UsersService usersService;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -41,16 +35,24 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder encoder) {
-        List<UserDetails> userDetailsList = new ArrayList<>();
-        userDetailsList.add(new User("IIVanov", encoder.encode("password"),
-                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))));
-        return new InMemoryUserDetailsManager(userDetailsList);
+        UserDetails author = User.builder()
+            .username("author")
+            .password(encoder.encode("password"))
+            .roles("AUTHOR")
+            .build();
+        UserDetails candidate = User.builder()
+            .username("candidate")
+            .password(encoder.encode("password"))
+            .roles("CANDIDATE")
+            .build();
+
+        return new InMemoryUserDetailsManager(author, candidate);
     }
 
     @Bean
-    protected DaoAuthenticationProvider daoAuthenticationProvider() {
+    protected DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService) {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(usersService);
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
@@ -64,17 +66,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests(
-                        (authorize) -> authorize
-                                .requestMatchers("/homepage").permitAll()
-                                .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                                .requestMatchers("/create_test").hasRole("AUTHOR")
-                                .requestMatchers("/test").hasRole("CANDIDATE")
-                                .requestMatchers("/test").rememberMe() // для длительной сессии
-                                .requestMatchers("/test/**").authenticated()
-                                .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
-                .build();
+            .authorizeHttpRequests(
+                (authorize) -> authorize
+                    .requestMatchers("/login*", "/logout*").permitAll()
+                    .requestMatchers("/test/**").hasRole("AUTHOR")
+                    .anyRequest().authenticated())
+            .csrf(Customizer.withDefaults())
+            .httpBasic(Customizer.withDefaults())
+            .formLogin(Customizer.withDefaults())
+            .build();
     }
 }

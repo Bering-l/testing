@@ -30,4 +30,9 @@ public class Question extends BaseEntity {
     @JoinTable(name = "test_question", joinColumns = @JoinColumn(name = "question_id"),
             inverseJoinColumns = @JoinColumn(name = "test_id"))
     Set<Test> testSet = new HashSet<>();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "question_type_id")
+    QuestionType questionType;
+
 }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Repository
 public interface TestRepository extends BaseRepository<Test> {
 
-    Page<Test> findTestByAuthor(Author author, Pageable page);
+    Page<Test> findTestByAuthorFirstName(String firstName, Pageable page);
 
     Page<Test> findTestByLastUpdate(Test test, LocalDateTime lastUpdate, Pageable page);
 
