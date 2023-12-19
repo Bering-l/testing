@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "candidate_answers", schema = "test")
+@Table(name = "candidate_answers", schema = "test_system")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CandidateAnswers extends BaseEntity {
 
@@ -26,6 +26,10 @@ public class CandidateAnswers extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     Candidate candidate;
+
+    @ManyToOne
+    @JoinColumn(name = "answer_id")
+    Answer candidateAnswer;
 
     @Column(name = "answer_date")
     @CreationTimestamp

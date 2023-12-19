@@ -8,8 +8,12 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CorrectAnswerDTO extends BaseDTO {
+public class AnswerDTO extends BaseDTO {
 
     String answer;
 
+    public AnswerDTO(Integer id, String answer) {
+        super(id);
+        this.answer = answer;
+    }
 }

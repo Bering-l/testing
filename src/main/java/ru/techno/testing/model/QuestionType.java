@@ -12,15 +12,11 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "question_type", schema = "test")
+@Table(name = "question_type", schema = "test_system")
 public class QuestionType extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", columnDefinition = "enum('MULTIPLE_CHOICE', 'MULTIPLE_RESPONSE', " +
             "'TRUE_OR_FALSE', 'LIKERT_SCALE', 'TASK', 'SEQUENCE', 'SHORT_ANSWER')")
     Type type;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "question_id")
-    List<Question> question = new ArrayList<>();
 }

@@ -1,25 +1,27 @@
 package ru.techno.testing.exception.handler;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.techno.testing.exception.DtoValidationException;
 import ru.techno.testing.exception.EntityNotFoundException;
 import ru.techno.testing.exception.dto.ExceptionDTO;
-
 import java.util.Objects;
 
 import static java.time.LocalDateTime.now;
 import static java.util.Objects.nonNull;
-
-@RestControllerAdvice
+@Slf4j
+@ControllerAdvice
 public class HandlerException {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Object> handlerEntityNotFoundException(final EntityNotFoundException e) {
+        log.error(e.getEntityClass());
         final ExceptionDTO response = ExceptionDTO.builder()
                 .error("EntityNotFoundException")
                 .message(e.getEntityClass() + " with id: " + e.getEntityId() + " not found.")
@@ -29,8 +31,14 @@ public class HandlerException {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Обрабатывает исключения типа DtoValidationException.
+     *
+     * @param e исключение, которое нужно обработать
+     * @return объект ExceptionDTO, содержащий информацию об ошибке
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(DtoValidationException.class)
+    @ExceptionHandler({DtoValidationException.class})
     public ExceptionDTO handleLibraryValidateException(final DtoValidationException e) {
         final ExceptionDTO response = ExceptionDTO.builder().build();
         final BindingResult bindingResult = e.getBindingResult();
@@ -39,6 +47,7 @@ public class HandlerException {
                     + bindingResult.getFieldError().getRejectedValue() + ", error - "
                     + bindingResult.getFieldError().getDefaultMessage());
         }
+        response.setMessage("DtoValidationException");
         response.setError(e.getClass().getSimpleName());
         response.setStatus(HttpStatus.BAD_REQUEST);
         response.setTimestamp(now());

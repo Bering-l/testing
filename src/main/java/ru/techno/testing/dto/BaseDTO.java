@@ -1,12 +1,16 @@
 package ru.techno.testing.dto;
 
-import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public abstract class BaseDTO {
-    @NotNull
+
     private Integer id;
+
+    protected BaseDTO() {
+    }
 }

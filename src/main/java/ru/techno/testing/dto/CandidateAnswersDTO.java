@@ -29,4 +29,13 @@ public class CandidateAnswersDTO extends BaseDTO {
     LocalDateTime answerDate;
 
     String answer;
+
+    public CandidateAnswersDTO(Integer id, Question question, Short point, Candidate candidate, LocalDateTime answerDate, String answer) {
+        super(id);
+        this.question = question;
+        this.point = point;
+        this.candidate = candidate;
+        this.answerDate = answerDate;
+        this.answer = answer;
+    }
 }

@@ -2,11 +2,11 @@ package ru.techno.testing.model;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
-
 @Data
 @MappedSuperclass
 @FieldDefaults(level = AccessLevel.PRIVATE)

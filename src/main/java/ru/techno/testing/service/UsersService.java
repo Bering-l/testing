@@ -1,4 +1,5 @@
-package ru.techno.testing.service.impl;
+package ru.techno.testing.service;
+/*
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,8 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.techno.testing.dto.RegistrationUserDto;
 import ru.techno.testing.model.Users;
-import ru.techno.testing.repository.RoleRepository;
 import ru.techno.testing.repository.UsersRepository;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 public class UsersService implements UserDetailsService {
 
     private final UsersRepository usersRepository;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
     public Optional<Users> findByEmail(String email) {
         return usersRepository.findByEmail(email);
@@ -45,8 +46,12 @@ public class UsersService implements UserDetailsService {
         );
     }
 
-    public void createNewUser(Users user) {
-        user.setRoles(List.of(roleRepository.findByName("ROLE_USER").get()));
-        usersRepository.save(user);
+    public Users createNewUser(RegistrationUserDto registrationUserDto) {
+        Users user = new Users();
+        user.setEmail(registrationUserDto.getEmail());
+        user.setPassword(registrationUserDto.getPassword());
+        user.setRoles(List.of(roleService.getUserRole()));
+        return usersRepository.save(user);
     }
 }
+*/

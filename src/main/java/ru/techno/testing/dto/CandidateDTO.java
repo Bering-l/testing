@@ -47,4 +47,14 @@ public class CandidateDTO extends BaseDTO {
 
     Set<Vacancy> vacancySet = new HashSet<>();
 
+    public CandidateDTO(Integer id, String firstName, String lastName, String email, String password, LocalDateTime createDate, LocalDateTime lastSession, Set<Vacancy> vacancySet) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.createDate = createDate;
+        this.lastSession = lastSession;
+        this.vacancySet = vacancySet;
+    }
 }

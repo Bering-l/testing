@@ -9,7 +9,7 @@ import ru.techno.testing.model.enums.DepartmentEnum;
 
 @Entity
 @Data
-@Table(name = "department", schema = "test")
+@Table(name = "department", schema = "test_system")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Department {
 
@@ -19,8 +19,7 @@ public class Department {
     Short id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "department_enum", columnDefinition = "enum('ADMINISTRATION', " +
-            "'ACCOUNTING_DEPARTMENT', 'HR', 'IT', 'FINANCIAL_DEPARTMENT', 'SERVICE_DEPARTMENT')")
+    @Column(name = "department_enum")
     DepartmentEnum departmentEnum;
 
 }

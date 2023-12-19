@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "candidate", schema = "test")
+@Table(name = "candidate", schema = "test_system")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Candidate extends BaseEntity {
     @Column(name = "first_name")
@@ -31,12 +31,7 @@ public class Candidate extends BaseEntity {
     @UpdateTimestamp
     LocalDateTime lastSession;
 
-    @Column(nullable = false)
-    String email;
-
     @ManyToMany(mappedBy = "candidateSet")
     Set<Vacancy> vacancySet = new HashSet<>();
-
-    String password;
 
 }

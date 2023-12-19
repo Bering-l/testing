@@ -1,16 +1,12 @@
 package ru.techno.testing.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 @Entity
-@Data
-@EqualsAndHashCode(callSuper = true)
-@Table(name = "correct_answer", schema = "test")
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class CorrectAnswer extends BaseEntity {
-
-    String answer;
+@Table(schema = "test_system", name = "correct_answer")
+public class CorrectAnswer extends Answer{
+    @Column(name = "max_point")
+    Short maxPoint;
 }

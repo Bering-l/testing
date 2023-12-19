@@ -19,4 +19,9 @@ public class QuestionTypeDTO extends BaseDTO {
 
     List<QuestionDTO> question = new ArrayList<>();
 
+    public QuestionTypeDTO(Integer id, Type type, List<QuestionDTO> question) {
+        super(id);
+        this.type = type;
+        this.question = question;
+    }
 }

@@ -12,5 +12,4 @@ import org.springframework.data.domain.Pageable;
 public interface AuthorRepository<T extends Author> extends JpaRepository<T, Short> {
     Page<Author> findAuthorByLastName(String lastName, Pageable pageable);
     Page<Author> findAuthorByDepartment(Department department, Pageable pageable);
-    Page<Author> findAuthorByEmail(String email, Pageable pageable);
 }

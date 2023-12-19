@@ -1,19 +1,17 @@
 package ru.techno.testing.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.HashSet;
 import java.util.Set;
 
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
-@Table(name = "vacancy", schema = "test")
+@Table(name = "vacancy", schema = "test_system")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Vacancy extends BaseEntity {
 
@@ -28,4 +26,5 @@ public class Vacancy extends BaseEntity {
     @JoinTable(name = "candidate_choose_vacancy", joinColumns = @JoinColumn(name = "vacancy_id"),
             inverseJoinColumns = @JoinColumn(name = "candidate_id"))
     Set<Candidate> candidateSet = new HashSet<>();
+
 }

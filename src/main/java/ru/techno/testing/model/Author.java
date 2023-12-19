@@ -7,14 +7,9 @@ import lombok.experimental.FieldDefaults;
 
 @Entity
 @Data
-@Table(name = "author", schema = "test")
+@Table(name = "author", schema = "test_system")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Author {
-
-    @Id
-    @Column(name = "author_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Short id;
+public class Author extends BaseEntity {
 
     @Column(name = "first_name")
     String firstName;
@@ -26,8 +21,4 @@ public class Author {
     @JoinColumn(name = "department_id")
     Department department;
 
-    @Column(nullable = false)
-    String email;
-
-    String password;
 }
