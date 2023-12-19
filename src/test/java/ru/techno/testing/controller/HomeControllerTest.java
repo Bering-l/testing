@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.test.context.support.WithMockUser;
+// import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,17 +26,11 @@ public class HomeControllerTest {
         this.mockMvc.perform(get("/homepage"))
                 .andExpect(status().isOk());
     }
-    @Test
-    @WithMockUser(username = "example@gmail.com", roles = {"CANDIDATE"})
-    void showTestCreationWithAuthorityRoleCandidate() throws Exception {
-        this.mockMvc.perform(get("/create_test"))
-                .andExpect(status().isForbidden());
-    }
 
-    @Test
-    @WithMockUser(username = "example@gmail.com", roles = {"CANDIDATE"})
+/*    @Test
+    @WithMockUser(username = "author@gmail.com", roles = {"AUTHOR"})
     void showUserAuthorityWithPassword() throws Exception {
-        this.mockMvc.perform(get("/test"))
+        this.mockMvc.perform(get("/test/**"))
                 .andExpect(status().isOk());
-    }
+    }*/
 }

@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Repository
 public interface CandidateRepository extends BaseRepository<Candidate> {
     Page<Candidate> findCandidateByLastName(String lastName, Pageable pageable);
-    Page<Candidate> findCandidateByEmail(String email, Pageable pageable);
     Page<Candidate> findCandidateByCreateDateAndLastSession(LocalDateTime createdDate, LocalDateTime lastSession,
                                                                Pageable pageable);
 }

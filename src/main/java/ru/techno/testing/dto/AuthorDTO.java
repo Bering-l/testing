@@ -33,4 +33,12 @@ public class AuthorDTO {
     @NotBlank(message = "Укажите пароль")
     String password;
 
+    public AuthorDTO(Short id, String firstName, String lastName, DepartmentDTO department, String email, String password) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.department = department;
+        this.email = email;
+        this.password = password;
+    }
 }

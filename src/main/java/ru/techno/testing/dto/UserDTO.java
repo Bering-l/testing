@@ -7,9 +7,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import ru.techno.testing.model.Role;
-
-import java.util.Collection;
 
 @Getter
 @Setter
@@ -23,5 +20,11 @@ public class UserDTO extends BaseDTO {
     @NotEmpty
     String password;
 
-    Collection<Role> roles;
+    public UserDTO(Integer id, String email, String password) {
+        super(id);
+        this.email = email;
+        this.password = password;
+    }
+// Collection<Role> roles;
+
 }

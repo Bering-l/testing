@@ -1,6 +1,7 @@
 package ru.techno.testing.mapper;
 
 import org.modelmapper.Converter;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.techno.testing.dto.BaseDTO;
 import ru.techno.testing.model.BaseEntity;
 import org.modelmapper.ModelMapper;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 public abstract class BaseMapper<E extends BaseEntity, D extends BaseDTO> implements Mapper<E, D> {
 
+    @Autowired
     ModelMapper mapper;
 
     private final Class<E> entity;

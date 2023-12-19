@@ -8,27 +8,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TestDTO extends BaseDTO {
+public class CreateTestDTO extends BaseDTO {
 
     AuthorDTO author;
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
-    LocalDateTime lastUpdate;
+    Set<QuestionDTO> questionSet = new HashSet<>();
 
-    Set<QuestionDTO> questionSet;
-
-    public TestDTO(Integer id, AuthorDTO author, LocalDateTime lastUpdate, Set<QuestionDTO> questionSet) {
+    public CreateTestDTO(Integer id, AuthorDTO author, Set<QuestionDTO> questionSet) {
         super(id);
         this.author = author;
-        this.lastUpdate = lastUpdate;
         this.questionSet = questionSet;
     }
 }

@@ -12,7 +12,7 @@ import java.util.Set;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "test", schema = "test")
+@Table(name = "test", schema = "test_system")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Test extends BaseEntity {
 
@@ -24,8 +24,4 @@ public class Test extends BaseEntity {
     @UpdateTimestamp
     LocalDateTime lastUpdate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "test_question", joinColumns = @JoinColumn(name = "test_id"),
-            inverseJoinColumns = @JoinColumn(name = "question_id"))
-    Set<Question> questionSet = new HashSet<>();
 }
